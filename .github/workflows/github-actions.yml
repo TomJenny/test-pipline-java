@@ -11,9 +11,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build mvn
-        run: |
-          mvn clean package -DskipTests
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
 
       - name: Build and tag Docker image
         run: |
@@ -23,7 +29,9 @@ jobs:
   deploy:
     env:
       APP_PORT: ${{ secrets.APP_PORT }}
-      DB_URL: ${{ secrets.DB_URL }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     runs-on: [self-hosted]
