@@ -1,19 +1,4 @@
-services:
-
-  # mysql:
-  #   image: mysql:8.0
-  #   container_name: mysql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./mysql/microservice.sql:/docker-entrypoint-initdb.d/1-microservice.sql
-  #     - ./mysql/init-microservice-user.sql:/docker-entrypoint-initdb.d/2-init-user.sql
+services: 
   department-service:
     image: department-service:v1
     ports:
