@@ -1,4 +1,20 @@
 services: 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/runner/mysql/microservice.sql:/docker-entrypoint-initdb.d/1-microservice.sql
+      - /home/runner/mysql/init-microservice-user.sql:/docker-entrypoint-initdb.d/2-init-user.sql
+    networks:
+      - services-network  
   department-service:
     image: department-service:v1
     ports:
@@ -11,3 +27,8 @@ services:
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
     restart: always
+    networks:
+      - services-network
+networks:
+  services-network:
+    driver: bridge
